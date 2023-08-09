@@ -3,7 +3,18 @@ import './src/css/style.scss'
 const battleground = document.querySelector('.battleground')
 const playSections = battleground.querySelectorAll('.clickable')
 
-let currentTurn = 'o';
+let currentTurn = 'x';
+let winner;
+
+const battlegroundValues = [
+  [null, null, null],
+  [null, null, null],
+  [null, null, null]
+]
+
+const updateBattlegroundValues = ()=>{
+  if(playSections.length !== battlegroundValues.length) throw new Error()
+}
 
 playSections.forEach(item => {
   item.addEventListener("mouseenter", () => {
