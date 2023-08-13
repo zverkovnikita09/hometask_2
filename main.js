@@ -1,42 +1,55 @@
-import './src/css/style.scss'
+import "./src/css/style.scss";
+import initGame from "./src/js/initGame";
 
-const battleground = document.querySelector('.battleground')
-const playSections = battleground.querySelectorAll('.clickable')
+const startPopup = document.querySelector(".start-popup");
 
-let currentTurn = 'x';
-let winner;
+const firstPlayerForm = startPopup.querySelector(".step-1");
+const secondPlayerForm = startPopup.querySelector(".step-2");
 
-const battlegroundValues = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null]
-]
+const firstTurnBlock = startPopup.querySelector(".first-turn");
 
-const updateBattlegroundValues = ()=>{
-  if(playSections.length !== battlegroundValues.length) throw new Error()
+let firstPlayer;
+let secondPlayer;
+
+firstPlayerForm.addEventListener("submit", (e) => {
+  const input = firstPlayerForm.querySelector("input");
+  e.preventDefault();
+  if (!input.value) return;
+  firstPlayer = input.value;
+  toSecondScreen();
+});
+
+function toSecondScreen() {
+  firstPlayerForm.classList.remove("active");
+  secondPlayerForm.classList.add("active");
+  const input = secondPlayerForm.querySelector("input");
+  input.value = "";
+  input.focus();
+  secondPlayerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!input.value) return;
+    secondPlayer = input.value;
+    toThirdScreen();
+  });
 }
 
-playSections.forEach(item => {
-  item.addEventListener("mouseenter", () => {
-    if (item.className.includes("fill")) return
-    item.classList.add(`hover-${currentTurn}`)
-  })
-})
+function toThirdScreen() {
+  secondPlayerForm.classList.remove("active");
+  firstTurnBlock.classList.add("active");
+  const player1_button = firstTurnBlock.querySelector(".player-button.is--1");
+  const player2_button = firstTurnBlock.querySelector(".player-button.is--2");
 
-playSections.forEach(item => {
-  item.addEventListener("mouseleave", () => {
-    if (item.className.includes("fill")) return
-    item.classList.remove(`hover-${currentTurn}`)
-  })
-})
+  player1_button.innerText = firstPlayer;
+  player1_button.addEventListener("click", () => {
+    startPopup.classList.remove("active");
+    firstTurnBlock.classList.remove("active");
+    initGame({ x: firstPlayer, o: secondPlayer });
+  });
 
-playSections.forEach(item => {
-  item.addEventListener("click", () => {
-    if (item.className.includes("fill")) return
-
-    item.classList.remove("hover-x");
-    item.classList.remove("hover-o");
-    item.classList.add(`fill-${currentTurn}`)
-    currentTurn = currentTurn === 'o' ? 'x' : 'o';
-  })
-})
+  player2_button.innerText = secondPlayer;
+  player2_button.addEventListener("click", () => {
+    startPopup.classList.remove("active");
+    firstTurnBlock.classList.remove("active");
+    initGame({ x: secondPlayer, o: firstPlayer });
+  });
+}

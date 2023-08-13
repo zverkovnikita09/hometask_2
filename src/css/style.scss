@@ -1,7 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+:root {
+  --color-x: #00008b;
+  --color-o: #cf0902;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Caveat', cursive;
 }
 
 .wrapper {
@@ -14,15 +22,45 @@
   place-content: center;
 }
 
+.current-player {
+  font-size: 42px;
+  margin-bottom: 35px;
+  text-align: center;
+
+  &.turn-o .player {
+    color: var(--color-o);
+  }
+
+  &.turn-x .player {
+    color: var(--color-x);
+  }
+}
+
 .battleground {
   height: 360px;
   width: 360px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   transform: skew(-7deg);
+
+  &.unclickable{
+    pointer-events: none;
+  }
+
+  &.turn-x {
+    .battle-section:hover:not(.filled) .x-icon {
+      opacity: 0.5;
+    }
+  }
+
+  &.turn-o {
+    .battle-section:hover:not(.filled) .o-icon {
+      opacity: 0.5;
+    }
+  }
 }
 
-.clickable {
+.battle-section {
   cursor: pointer;
   font-size: 80px;
   position: relative;
@@ -63,28 +101,36 @@
     border-top: 3px solid #000;
   }
 
-  &.hover-o .o-icon {
-    opacity: 0.5;
-  }
+  &.filled {
+    &.fill-x {
+      .x-icon {
+        opacity: 1;
+        filter: none;
+      }
 
-  &.hover-x .x-icon {
-    opacity: 0.5;
-  }
+      &.gray .x-icon {
+        filter: grayscale(1);
+        opacity: 0.5;
+      }
+    }
 
-  &.fill-x .x-icon {
-    opacity: 1;
-    filter: none;
-  }
+    &.fill-o {
+      .o-icon {
+        opacity: 1;
+        filter: none;
+      }
 
-  &.fill-o .o-icon {
-    opacity: 1;
-    filter: none;
+      &.gray .o-icon {
+        filter: grayscale(1);
+        opacity: 0.5;
+      }
+    }
   }
 }
 
 .o-icon {
   position: absolute;
-  color: #cf0902;
+  color: var(--color-o);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -94,7 +140,7 @@
 
 .x-icon {
   position: absolute;
-  color: #00008b;
+  color: var(--color-x);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -106,8 +152,118 @@
   position: absolute;
   height: 8px;
   width: 120%;
-  background-color: #00008b;
   top: calc(50% - 8px/2);
   left: -10%;
   z-index: 5;
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
+  }
+
+  &.color-x {
+    background-color: var(--color-x);
+  }
+
+  &.color-o {
+    background-color: var(--color-o);
+  }
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  opacity: 1;
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  display: grid;
+  place-content: center;
+  opacity: 0;
+  transition: opacity 0.2s,
+    visibility 0s 0.2s;
+  visibility: hidden;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+    transition: 0.2s;
+  }
+}
+
+.name-form {
+  font-size: 50px;
+  text-align: center;
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
+  &__input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #000;
+    width: 100%;
+    font-size: 72px;
+    margin-top: 20px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__submit{
+    margin-top: 35px;
+  }
+}
+
+.button {
+  font-size: 42px;
+  background-color: transparent;
+  padding: 10px 55px;
+  cursor: pointer;
+  border-radius: 15px;
+  transform: skew(-15deg);
+}
+
+.first-turn {
+  display: none;
+  gap: 35px;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+
+  &__title {
+    width: 100%;
+    font-size: 48px;
+    margin-bottom: 25px;
+  }
+
+  &.active {
+    display: flex;
+  }
+}
+
+.winner {
+  font-size: 80px;
+  text-align: center;
+}
+
+.name {
+  &.win-o {
+    color: var(--color-o);
+  }
+
+  &.win-x {
+    color: var(--color-x);
+  }
+}
+
+.reload-game{
+  margin-top: 35px;
 }

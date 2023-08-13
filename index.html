@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://kit.fontawesome.com/239d8f3749.js" crossorigin="anonymous"></script>
   <title>Крестики нолики</title>
@@ -11,47 +10,69 @@
 
 <body>
   <div class="wrapper">
+    <div class="current-player"></div>
     <div class="battle-paper">
       <div class="battleground">
-        <div class="clickable">
+        <div class="battle-section" data-index="0">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="1">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="2">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="3">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="4">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="5">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="6">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="7">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <div class="clickable">
+        <div class="battle-section" data-index="8">
           <i class="fa-solid fa-o o-icon"></i>
           <i class="fa-solid fa-x x-icon"></i>
         </div>
-        <!-- <div class="win-line"></div> -->
+        <div class="win-line"></div>
       </div>
     </div>
+  </div>
+  <div class="popup active start-popup">
+    <form class="name-form step-1 active">
+      <p>Введите имя игрока 1</p>
+      <input type="text" class="name-form__input" autofocus>
+      <button class="name-form__submit button">Далее</button>
+    </form>
+    <form class="name-form step-2">
+      <p>Введите имя игрока 2</p>
+      <input type="text" class="name-form__input">
+      <button class="name-form__submit button">Далее</button>
+    </form>
+    <div class="first-turn">
+      <p class="first-turn__title">Первым ходит:</p>
+      <button class="player-button button is--1"></button>
+      <button class="player-button button is--2"></button>
+    </div>
+  </div>
+  <div class="popup end-popup">
+    <p class="winner">Ничья</p>
+    <button class="reload-game button">Начать заново</button>
   </div>
   <script type="module" src="/main.js"></script>
 </body>
