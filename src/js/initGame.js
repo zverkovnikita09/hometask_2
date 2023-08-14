@@ -22,7 +22,7 @@ export default function initGame(players) {
   const winCombinations = [
     { condition: [0, 1, 2], transformLine: [0, -120, 0] },
     { condition: [3, 4, 5], transformLine: [0, 0, 0] },
-    { condition: [6, 7, 8], transformLine: [120, 0, 0] },
+    { condition: [6, 7, 8], transformLine: [0, 120, 0] },
     { condition: [0, 3, 6], transformLine: [-120, 0, 90] },
     { condition: [1, 4, 7], transformLine: [0, 0, 90] },
     { condition: [2, 5, 8], transformLine: [120, 0, 90] },
@@ -43,7 +43,9 @@ export default function initGame(players) {
     playSections.forEach((item) => (item.className = "battle-section"));
     wonCombination = undefined;
     battlegroundValues = battlegroundValues.map((item) => null);
-    winLine.classList.remove("visible");
+    winLine.className = "win-line";
+    currentTurn = "x";
+    changeBattlegroundTurn()
   };
 
   const nextTurn = () => {
